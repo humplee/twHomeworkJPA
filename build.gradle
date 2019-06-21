@@ -10,6 +10,9 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath(group: 'org.flywaydb', name: 'flyway-gradle-plugin', version: "4.0.3")
+        classpath(group: 'mysql', name: 'mysql-connector-java', version: "5.1.41")
+
     }
 }
 
@@ -19,6 +22,7 @@ apply plugin: 'maven'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
+apply plugin: 'org.flywaydb.flyway'
 
 repositories {
     maven {
@@ -38,3 +42,11 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-rest')
     compile('org.flywaydb:flyway-core')
 }
+flyway {
+    url = 'jdbc:mysql://localhost:3306/miniprograme?useSSL=false'
+    locations = ['filesystem:db/migration']
+    user = 'root'
+    password = '123456'
+    schemas = ['flywaydb']
+}
+
